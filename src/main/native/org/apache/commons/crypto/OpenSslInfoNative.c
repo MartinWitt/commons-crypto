@@ -57,12 +57,12 @@ static void get_methods(JNIEnv *env, void *openssl)
 static void get_methods(JNIEnv *env, HMODULE openssl)
 #endif
 {
-  LOAD_DYNAMIC_SYMBOL_FALLBACK(dlsym_OpenSSL_version_num, env, openssl, "OpenSSL_version_num", "SSLeay");
-  fprintf(stderr, "dlsym_OpenSSL_version_num() => %lx\n", dlsym_OpenSSL_version_num());
 #ifdef UNIX
+  LOAD_DYNAMIC_SYMBOL_FALLBACK(dlsym_OpenSSL_version_num, env, openssl, "OpenSSL_version_num", "SSLeay");
   LOAD_DYNAMIC_SYMBOL_FALLBACK(dlsym_OpenSSL_version, env, openssl, "OpenSSL_version", "SSLeay_version");
 #endif
 #ifdef WINDOWS
+  LOAD_DYNAMIC_SYMBOL_FALLBACK(__dlsym_OpenSSL_version_num, dlsym_OpenSSL_version_num, env, openssl, "OpenSSL_version_num", "SSLeay");
   LOAD_DYNAMIC_SYMBOL_FALLBACK(__dlsym_OpenSSL_version, dlsym_OpenSSL_version, env, openssl, "OpenSSL_version", "SSLeay_version");
 #endif
 }
