@@ -21,7 +21,7 @@ package org.apache.commons.crypto;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Disabled;
+// import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class CryptoTest {
@@ -49,7 +49,7 @@ public class CryptoTest {
 	}
 
 	@Test
-	@Disabled("Mac64 failure with OpenSSL 1.1.1g")
+	// @Disabled("Mac64 failure with OpenSSL 1.1.1g")
 	public void testMain() throws Throwable {
 		try {
 			Crypto.main(new String[0]);
