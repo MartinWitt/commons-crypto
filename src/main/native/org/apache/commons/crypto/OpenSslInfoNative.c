@@ -60,10 +60,11 @@ static void get_methods(JNIEnv *env, HMODULE openssl)
   LOAD_OPENSSL_VERSION_FUNCTION(dlsym_OpenSSL_version_num, env, openssl);
   fprintf(stderr, "dlsym_OpenSSL_version_num() => %lx\n", dlsym_OpenSSL_version_num());
 #ifdef UNIX
-  if (dlsym_OpenSSL_version_num() > VERSION_1_1_X) {
-    LOAD_DYNAMIC_SYMBOL(dlsym_OpenSSL_version, env, openssl, "OpenSSL_version");
-  } else {
+  long version = dlsym_OpenSSL_version_num();
+  if ((version <= VERSION_1_1_X) || version == 0x20000000) {
     LOAD_DYNAMIC_SYMBOL(dlsym_OpenSSL_version, env, openssl, "SSLeay_version");
+  } else {
+    LOAD_DYNAMIC_SYMBOL(dlsym_OpenSSL_version, env, openssl, "OpenSSL_version");
   }
 #endif
 #ifdef WINDOWS
