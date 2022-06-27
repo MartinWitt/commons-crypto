@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '**/workflows/maven.yaml'
+      - '**/workflows/maven.yml'
 
 jobs:
   build:
@@ -60,6 +60,6 @@ jobs:
         OPENSSL_HOME: "C:\\Miniconda\\Library"
       run: |
         # mvn -V --file pom.xml --no-transfer-progress -DtrimStackTrace=false
-        mvn test -DskipTests -Drat.skip -Danimal.sniffer.skip
+        mvn test -DskipTests=1 -Drat.skip=1 -Danimal.sniffer.skip=1
         mvn -q exec:java -Dexec.mainClass=org.apache.commons.crypto.Crypto
         mvn -q exec:java -Dexec.mainClass=org.apache.commons.crypto.jna.OpenSslJna
