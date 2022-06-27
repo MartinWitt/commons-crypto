@@ -18,6 +18,9 @@ name: Java CI
 on:
   # allow direct trigger
   workflow_dispatch:
+  push:
+    paths:
+      - '**/workflows/maven.yaml'
 
 jobs:
   build:
@@ -26,19 +29,9 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest, macos-latest]
         java: [ 8 ]
         experimental: [false]
-#        include:
-#          - java: 18-ea
-#            os: ubuntu-latest
-#            experimental: true        
-#          - java: 18-ea
-#            os: windows-latest
-#            experimental: true        
-#          - java: 18-ea
-#            os: macos-latest
-#            experimental: true        
       fail-fast: false
         
     steps:
@@ -65,4 +58,8 @@ jobs:
       # "C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\opt"
       env:
         OPENSSL_HOME: "C:\\Miniconda\\Library"
-      run: mvn -V --file pom.xml --no-transfer-progress -DtrimStackTrace=false
+      run: |
+        # mvn -V --file pom.xml --no-transfer-progress -DtrimStackTrace=false
+        mvn test -DskipTests -Drat.skip -Danimal.sniffer.skip
+        mvn -q exec:java -Dexec.mainClass=org.apache.commons.crypto.Crypto
+        mvn -q exec:java -Dexec.mainClass=org.apache.commons.crypto.jna.OpenSslJna
