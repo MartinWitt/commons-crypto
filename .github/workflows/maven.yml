@@ -59,7 +59,6 @@ jobs:
       env:
         OPENSSL_HOME: "C:\\Miniconda\\Library"
       run: |
-        # mvn -V --file pom.xml --no-transfer-progress -DtrimStackTrace=false
-        mvn test -DskipTests=1 -Drat.skip=1 -Danimal.sniffer.skip=1
+        mvn --no-transfer-progress process-classes
         mvn -q exec:java -Dexec.mainClass=org.apache.commons.crypto.Crypto
         mvn -q exec:java -Dexec.mainClass=org.apache.commons.crypto.jna.OpenSslJna
