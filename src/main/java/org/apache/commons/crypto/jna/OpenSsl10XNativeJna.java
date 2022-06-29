@@ -36,7 +36,7 @@ class OpenSsl10XNativeJna {
         boolean ok = false;
         Throwable thrown = null;
         try {
-            final String libName = System.getProperty(Crypto.CONF_PREFIX + OpenSsl10XNativeJna.class.getSimpleName(),
+            final String libName = System.getProperty(Crypto.CONF_PREFIX + OpenSslNativeJna.class.getSimpleName(),
                     "crypto");
             OpenSslJna.debug("Native.register('%s')%n", libName);
             Native.register(libName);
@@ -49,13 +49,19 @@ class OpenSsl10XNativeJna {
         }
     }
 
+    // Try to keep methods aligned across versions
+
     /**
+     * @see <a href="https://www.openssl.org/docs/man1.0.2/man3/SSLeay.html">Version Number</a>
+     * (does not appear to be used yet)
      * @return OPENSSL_VERSION_NUMBER which is a numeric release version identifier
      */
     public static native NativeLong SSLeay();
 
     /**
      * Retrieves version/build information about OpenSSL library.
+     *
+     * @see <a href="https://www.openssl.org/docs/man1.0.2/man3/SSLeay_version.html">Version Info</a>
      *
      * @param type
      *            type can be SSLEAY_VERSION, SSLEAY_CFLAGS, SSLEAY_BUILT_ON...

@@ -36,7 +36,7 @@ class OpenSsl11XNativeJna {
         boolean ok = false;
         Throwable thrown = null;
         try {
-            final String libName = System.getProperty(Crypto.CONF_PREFIX + OpenSsl11XNativeJna.class.getSimpleName(),
+            final String libName = System.getProperty(Crypto.CONF_PREFIX + OpenSslNativeJna.class.getSimpleName(),
                     "crypto");
             OpenSslJna.debug("Native.register('%s')%n", libName);
             Native.register(libName);
@@ -49,6 +49,19 @@ class OpenSsl11XNativeJna {
         }
     }
 
+    // Try to keep methods aligned across versions
+
+    /**
+     * Retrieves version/build information about OpenSSL library.
+     *
+     * @see <a href="https://www.openssl.org/docs/man1.1.1/man3/OpenSSL_version.html">OpenSSL_version</a>
+     * @param type
+     *            type can be OPENSSL_VERSION, OPENSSL_CFLAGS, OPENSSL_BUILT_ON...
+     * @return A pointer to a constant string describing the version of the OpenSSL library or
+     *         giving information about the library build.
+     */
+
+     public static native String OpenSSL_version(int type);
     /**
      * @return the earliest error code from the thread's error queue without modifying it.
      */
@@ -133,7 +146,7 @@ class OpenSsl11XNativeJna {
      * @return 1 for success and 0 for failure.
      */
     public static native int EVP_CipherInit_ex(PointerByReference ctx, PointerByReference cipher,
-            PointerByReference impl, byte[] key, byte[] iv, int enc);
+            PointerByReference impl, byte key[], byte iv[], int enc);
 
     /**
      * Continues a multiple-part encryption/decryption operation.
@@ -251,13 +264,4 @@ class OpenSsl11XNativeJna {
      */
     public static native PointerByReference ENGINE_by_id(String id);
 
-    /**
-     * Retrieves version/build information about OpenSSL library.
-     *
-     * @param type
-     *            type can be OPENSSL_VERSION, OPENSSL_CFLAGS, OPENSSL_BUILT_ON...
-     * @return A pointer to a constant string describing the version of the OpenSSL library or
-     *         giving information about the library build.
-     */
-    public static native String OpenSSL_version(int type);
 }
