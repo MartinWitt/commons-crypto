@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '**/workflows/maven.yml'
+      - '**/workflows/maventest.yml'
 
 jobs:
   build:
