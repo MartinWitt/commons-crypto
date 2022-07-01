@@ -18,6 +18,7 @@ name: Maven Test
 on:
   # allow direct trigger
   workflow_dispatch:
+
   push:
     paths:
       - '**/workflows/maventest.yml'
