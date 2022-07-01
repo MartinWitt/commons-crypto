@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         # Look for older version of crypto library
-        os: [macos-10.14 ubuntu-latest windows-latest]
+        os: [macos-10.14, ubuntu-latest, windows-latest]
         java: [ 8 ]
         experimental: [false]
       fail-fast: false
